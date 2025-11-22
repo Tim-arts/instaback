@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { FollowAnalysis } from '../../models/comparison-tool.models';
+import { AnalysisResultsInterface } from '../../models/comparison-tool.models';
 
 @Component({
   selector: 'app-analysis-results',
@@ -8,7 +8,7 @@ import { FollowAnalysis } from '../../models/comparison-tool.models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnalysisResultsComponent {
-  public result = input.required<FollowAnalysis>();
+  public result = input.required<AnalysisResultsInterface>();
 
   public readonly resetAnalysis = output<void>();
 

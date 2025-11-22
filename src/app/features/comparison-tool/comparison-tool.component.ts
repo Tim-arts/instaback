@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { DEFAULT_FOLLOWERS_LABEL, DEFAULT_FOLLOWING_LABEL } from './comparison-tool';
@@ -51,24 +51,26 @@ export class ComparisonToolComponent {
     defaultValue: undefined
   });
 
-  protected onFollowersFileSelected(event: Event): void {
+  protected onFileSelected(
+    event: Event,
+    fileSignal: WritableSignal<File | undefined>,
+    fileNameSignal: WritableSignal<string>
+  ): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
-    if (file) {
-      this.#followersFile.set(file);
-      this.followersFileName.set(file.name);
-    }
+    if (!file) return;
+
+    fileSignal.set(file);
+    fileNameSignal.set(file.name);
+  }
+
+  protected onFollowersFileSelected(event: Event): void {
+    this.onFileSelected(event, this.#followersFile, this.followersFileName);
   }
 
   protected onFollowingFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-
-    if (file) {
-      this.#followingFile.set(file);
-      this.followingFileName.set(file.name);
-    }
+    this.onFileSelected(event, this.#followingFile, this.followingFileName);
   }
 
   protected onStartAnalysis(): void {

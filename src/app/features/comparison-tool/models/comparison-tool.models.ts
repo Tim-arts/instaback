@@ -1,23 +1,23 @@
-export interface FollowAnalysis {
+export interface AnalysisResultsInterface {
   totalFollowers: number;
   totalFollowing: number;
   mutualFollows: number;
   notFollowingBack: string[];
 }
 
-export interface StringListItem {
+export interface ListItemInterface {
   href: string;
   value: string;
   timestamp: number;
 }
 
-export interface FollowerItem {
+export interface FollowerItemInterface {
   title: string;
   media_list_data: any[];
-  string_list_data: StringListItem[];
+  string_list_data: ListItemInterface[];
 }
 
-export interface FollowingItem {
+export interface FollowingItemInterface {
   title: string;
   string_list_data: Array<{
     href: string;
@@ -25,6 +25,6 @@ export interface FollowingItem {
   }>;
 }
 
-export interface FollowingData {
-  relationships_following: FollowingItem[];
+export interface FollowingDataInterface {
+  relationships_following: FollowingItemInterface[];
 }

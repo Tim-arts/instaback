@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { catchError, from, map, Observable, shareReplay, throwError } from 'rxjs';
-import { FollowAnalysis, FollowerItem, FollowingData } from '../models/comparison-tool.models';
+import { AnalysisResultsInterface, FollowerItemInterface, FollowingDataInterface } from '../models/comparison-tool.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyzerService {
-  analyzeData$(followersFile: File, followingFile: File): Observable<FollowAnalysis> {
+  analyzeData$(followersFile: File, followingFile: File): Observable<AnalysisResultsInterface> {
     return from(
       Promise.all([
-        this.#readFileAsJSON<FollowerItem[]>(followersFile),
-        this.#readFileAsJSON<FollowingData>(followingFile)
+        this.#readFileAsJSON<FollowerItemInterface[]>(followersFile),
+        this.#readFileAsJSON<FollowingDataInterface>(followingFile)
       ])
     ).pipe(
       map(([followersData, followingData]) =>
@@ -21,9 +21,9 @@ export class AnalyzerService {
   }
 
   #processData(
-    followersData: FollowerItem[],
-    followingData: FollowingData
-  ): FollowAnalysis {
+    followersData: FollowerItemInterface[],
+    followingData: FollowingDataInterface
+  ): AnalysisResultsInterface {
     const followers = new Set<string>();
     for (const item of followersData) {
       const username = item.string_list_data?.[0]?.value;
@@ -52,8 +52,8 @@ export class AnalyzerService {
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const content = e.target?.result as string;
-          resolve(JSON.parse(content) as T);
+          const content = String(e.target?.result);
+          resolve(JSON.parse(content));
         } catch {
           reject(new Error('Invalid JSON file'));
         }
