@@ -12,7 +12,9 @@
       <span class="block text-3xl font-bold mb-2 text-gray-900">{{ result().mutualFollows }}</span>
       <span class="block text-sm text-gray-600">Mutual Follows</span>
     </div>
-    <div class="bg-gradient-to-br from-purple-500 to-purple-700 p-6 rounded-xl shadow-md text-center text-white">
+    <div
+      class="bg-gradient-to-br from-purple-500 to-purple-700 p-6 rounded-xl shadow-md text-center text-white"
+    >
       <span class="block text-3xl font-bold mb-2">{{ notFollowingBackCount() }}</span>
       <span class="block text-sm opacity-90">Not Following Back</span>
     </div>
@@ -25,7 +27,9 @@
     } @else {
       <div class="max-h-96 overflow-y-auto">
         @for (username of result().notFollowingBack; track username) {
-          <div class="flex justify-between items-center p-3 border-b border-gray-100 last:border-b-0">
+          <div
+            class="flex justify-between items-center p-3 border-b border-gray-100 last:border-b-0"
+          >
             <span class="text-gray-900">{{ username }}</span>
             <a
               [href]="'https://www.instagram.com/' + username"

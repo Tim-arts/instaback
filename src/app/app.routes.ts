@@ -4,11 +4,11 @@ import { ComparisonToolComponent } from './features/comparison-tool/comparison-t
 export const routes: Routes = [
   {
     path: '',
-    component: ComparisonToolComponent
+    component: ComparisonToolComponent,
   },
   {
     path: '',
     redirectTo: '',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];

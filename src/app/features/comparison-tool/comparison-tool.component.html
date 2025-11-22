@@ -33,9 +33,6 @@
   </div>
 
   @if (analysisResults.value(); as result) {
-    <app-analysis-results
-      [result]="result"
-      (resetAnalysis)="reset()"
-    />
+    <app-analysis-results [result]="result" (resetAnalysis)="reset()" />
   }
 </div>

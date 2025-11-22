@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   selector: 'app-file-upload',
   imports: [],
   templateUrl: './file-upload.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent {
   public readonly inputNameLabel = input.required<string>();

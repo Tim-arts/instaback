@@ -8,9 +8,8 @@ describe('ComparisonTool', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ComparisonToolComponent]
-    })
-    .compileComponents();
+      imports: [ComparisonToolComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ComparisonToolComponent);
     component = fixture.componentInstance;

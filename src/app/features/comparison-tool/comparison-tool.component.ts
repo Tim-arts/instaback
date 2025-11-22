@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  linkedSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { DEFAULT_FOLLOWERS_LABEL, DEFAULT_FOLLOWING_LABEL } from './comparison-tool';
@@ -16,16 +23,16 @@ import { AnalyzerService } from './services/analyzer.service';
     HeaderComponent,
     AnalysisResultsComponent,
     FileUploadComponent,
-    AnalysisButtonComponent
+    AnalysisButtonComponent,
   ],
   templateUrl: './comparison-tool.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComparisonToolComponent {
   readonly #analyzerService = inject(AnalyzerService);
 
   protected readonly canAnalyze = linkedSignal(() => {
-    if(this.analysisResults.isLoading()) return false;
+    if (this.analysisResults.isLoading()) return false;
     return !!this.#followersFile() && !!this.#followingFile();
   });
 
@@ -48,13 +55,13 @@ export class ComparisonToolComponent {
 
       return this.#analyzerService.analyzeData$(followers, following);
     },
-    defaultValue: undefined
+    defaultValue: undefined,
   });
 
   protected onFileSelected(
     event: Event,
     fileSignal: WritableSignal<File | undefined>,
-    fileNameSignal: WritableSignal<string>
+    fileNameSignal: WritableSignal<string>,
   ): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];

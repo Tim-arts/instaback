@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
 import { catchError, from, map, Observable, shareReplay, throwError } from 'rxjs';
-import { AnalysisResultsInterface, FollowerItemInterface, FollowingDataInterface } from '../models/comparison-tool.models';
+import {
+  AnalysisResultsInterface,
+  FollowerItemInterface,
+  FollowingDataInterface,
+} from '../models/comparison-tool.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AnalyzerService {
   analyzeData$(followersFile: File, followingFile: File): Observable<AnalysisResultsInterface> {
     return from(
       Promise.all([
         this.#readFileAsJSON<FollowerItemInterface[]>(followersFile),
-        this.#readFileAsJSON<FollowingDataInterface>(followingFile)
-      ])
+        this.#readFileAsJSON<FollowingDataInterface>(followingFile),
+      ]),
     ).pipe(
-      map(([followersData, followingData]) =>
-        this.#processData(followersData, followingData)),
-      catchError(err => throwError(() => err)),
-      shareReplay(1) // Ensures only one execution even with multiple subscribers
+      map(([followersData, followingData]) => this.#processData(followersData, followingData)),
+      catchError((err) => throwError(() => err)),
+      shareReplay(1), // Ensures only one execution even with multiple subscribers
     );
   }
 
   #processData(
     followersData: FollowerItemInterface[],
-    followingData: FollowingDataInterface
+    followingData: FollowingDataInterface,
   ): AnalysisResultsInterface {
     const followers = new Set<string>();
     for (const item of followersData) {
@@ -36,14 +39,14 @@ export class AnalyzerService {
       if (username) following.add(username);
     }
 
-    const notFollowingBack = [...following].filter(u => !followers.has(u)).sort();
-    const mutualFollowsCount = [...followers].filter(u => following.has(u)).length;
+    const notFollowingBack = [...following].filter((u) => !followers.has(u)).sort();
+    const mutualFollowsCount = [...followers].filter((u) => following.has(u)).length;
 
     return {
       totalFollowers: followers.size,
       totalFollowing: following.size,
       mutualFollows: mutualFollowsCount,
-      notFollowingBack
+      notFollowingBack,
     };
   }
 

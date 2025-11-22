@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:instaback": "node dist/instaback/server/server.mjs",
-    "eslint": "npx eslint \"src/**/*.{ts,js,jsx,tsx}\" --fix"
+    "eslint": "npx eslint \"src/**/*.ts\" --fix",
+    "prettier": "prettier --write \"**/*.{ts,html}\""
   },
   "prettier": {
     "printWidth": 100,
@@ -41,15 +42,16 @@
     "@angular/build": "^21.0.0",
     "@angular/cli": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
-    "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
     "eslint": "^9.39.1",
+    "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.3",
+    "prettier": "3.6.2",
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.47.0",
