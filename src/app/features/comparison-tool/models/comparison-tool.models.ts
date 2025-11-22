@@ -13,7 +13,7 @@ export interface ListItemInterface {
 
 export interface FollowerItemInterface {
   title: string;
-  media_list_data: any[];
+  media_list_data: string[];
   string_list_data: ListItemInterface[];
 }
 
