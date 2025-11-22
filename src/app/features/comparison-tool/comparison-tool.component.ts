@@ -22,9 +22,9 @@ export class ComparisonToolComponent {
   #followersFile = signal<File | undefined>(undefined);
   #followingFile = signal<File | undefined>(undefined);
 
-  readonly followersFileName = signal<string>('');
-  readonly followingFileName = signal<string>('');
-  readonly canAnalyze = signal<boolean>(false);
+  protected readonly followersFileName = signal<string>('');
+  protected readonly followingFileName = signal<string>('');
+  protected readonly canAnalyze = signal<boolean>(false);
 
   protected onFollowersFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
