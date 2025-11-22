@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { catchError, from, map, Observable, throwError } from 'rxjs';
-import { DebugInfo, FollowAnalysis, FollowerItem, FollowingData } from '../models/comparison-tool.models';
+import { FollowAnalysis, FollowerItem, FollowingData } from '../models/comparison-tool.models';
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +45,11 @@ export class AnalyzerService {
   ): FollowAnalysis {
     // Extract follower usernames with timestamps
     const followers = new Set<string>();
-    const followerTimestamps: number[] = [];
-    const followersList: string[] = [];
     let duplicateFollowersCount = 0;
 
     for (const item of followersData) {
       if (item.string_list_data && item.string_list_data.length > 0) {
         const username = item.string_list_data[0].value;
-        const timestamp = item.string_list_data[0].timestamp;
 
         if (followers.has(username)) {
           console.warn(`Duplicate follower found: ${username}`);
@@ -60,21 +57,16 @@ export class AnalyzerService {
         }
 
         followers.add(username);
-        followersList.push(username);
-        followerTimestamps.push(timestamp);
       }
     }
 
     // Extract following usernames with timestamps
     const following = new Set<string>();
-    const followingTimestamps: number[] = [];
-    const followingList: string[] = [];
     let duplicateFollowingCount = 0;
 
     for (const item of followingData.relationships_following) {
       if (item.title) {
         const username = item.title;
-        const timestamp = item.string_list_data?.[0]?.timestamp ?? 0;
 
         if (following.has(username)) {
           console.warn(`Duplicate following found: ${username}`);
@@ -82,8 +74,6 @@ export class AnalyzerService {
         }
 
         following.add(username);
-        followingList.push(username);
-        followingTimestamps.push(timestamp);
       }
     }
 
@@ -95,45 +85,11 @@ export class AnalyzerService {
       following.has(username)
     ).length;
 
-    // Create debug info
-    const debugInfo: DebugInfo = {
-      followersFileTimestamps: {
-        earliest: Math.min(...followerTimestamps),
-        latest: Math.max(...followerTimestamps)
-      },
-      followingFileTimestamps: {
-        earliest: Math.min(...followingTimestamps),
-        latest: Math.max(...followingTimestamps)
-      },
-      sampleFollowers: followersList.slice(0, 10),
-      sampleFollowing: followingList.slice(0, 10),
-      duplicatesInFollowers: duplicateFollowersCount,
-      duplicatesInFollowing: duplicateFollowingCount
-    };
-
-    console.log('Debug Info:', debugInfo);
-    console.log('Total unique followers:', followers.size);
-    console.log('Total unique following:', following.size);
-
-    // Log if antoninecce is found
-    if (followers.has('antoninecce')) {
-      console.log('✅ antoninecce IS in followers');
-    } else {
-      console.log('❌ antoninecce is NOT in followers');
-    }
-
-    if (following.has('antoninecce')) {
-      console.log('✅ antoninecce IS in following');
-    } else {
-      console.log('❌ antoninecce is NOT in following');
-    }
-
     return {
       totalFollowers: followers.size,
       totalFollowing: following.size,
       mutualFollows: mutualFollowsCount,
       notFollowingBack,
-      debugInfo
     };
   }
 

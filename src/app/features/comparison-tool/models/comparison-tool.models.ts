@@ -3,7 +3,6 @@ export interface FollowAnalysis {
   totalFollowing: number;
   mutualFollows: number;
   notFollowingBack: string[];
-  debugInfo: DebugInfo;
 }
 
 export interface StringListItem {
@@ -28,13 +27,4 @@ export interface FollowingItem {
 
 export interface FollowingData {
   relationships_following: FollowingItem[];
-}
-
-export interface DebugInfo {
-  followersFileTimestamps: { earliest: number; latest: number };
-  followingFileTimestamps: { earliest: number; latest: number };
-  sampleFollowers: string[];
-  sampleFollowing: string[];
-  duplicatesInFollowers: number;
-  duplicatesInFollowing: number;
 }
