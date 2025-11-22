@@ -13,12 +13,9 @@ export class AnalyzerService {
         this.#readFileAsJSON<FollowingData>(followingFile)
       ])
     ).pipe(
-      map(([followersData, followingData]) => {
-        return this.#processData(followersData, followingData);
-      }),
-      catchError(err => {
-        return throwError(() => err);
-      }),
+      map(([followersData, followingData]) =>
+        this.#processData(followersData, followingData)),
+      catchError(err => throwError(() => err)),
       shareReplay(1) // Ensures only one execution even with multiple subscribers
     );
   }

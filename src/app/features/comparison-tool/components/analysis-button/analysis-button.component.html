@@ -1,0 +1,7 @@
+<button
+  [class]="buttonClasses()"
+  [disabled]="!canAnalyze()"
+  (click)="startAnalysis.emit()"
+>
+  {{ isLoading() ? 'Analyzing...' : 'Analyze' }}
+</button>

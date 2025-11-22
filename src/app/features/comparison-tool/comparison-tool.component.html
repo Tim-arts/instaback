@@ -7,7 +7,6 @@
       [inputNameLabel]="'Followers File'"
       [inputId]="'followers-file'"
       [fileNameLabel]="followersFileName()"
-      [fileType]="FileTypeEnum.FOLLOWERS"
       [disabled]="isAnalysisTriggered()"
       (changeEvent)="onFollowersFileSelected($event)"
     />
@@ -15,28 +14,26 @@
       [inputNameLabel]="'Following File'"
       [inputId]="'following-file'"
       [fileNameLabel]="followingFileName()"
-      [fileType]="FileTypeEnum.FOLLOWING"
       [disabled]="isAnalysisTriggered()"
       (changeEvent)="onFollowingFileSelected($event)"
     />
 
-    <button
-      class="w-full p-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors mt-4"
-      [disabled]="!canAnalyze()"
-      (click)="startAnalysis()"
-    >
-      {{ analysisResult.isLoading() ? 'Analyzing...' : 'Analyze' }}
-    </button>
+    <app-analysis-button
+      [isAnalysisTriggered]="isAnalysisTriggered()"
+      [canAnalyze]="canAnalyze()"
+      [isLoading]="analysisResults.isLoading()"
+      (startAnalysis)="onStartAnalysis()"
+    />
 
-    @if (analysisResult.error()) {
+    @if (analysisResults.error()) {
       <div class="mt-4 p-4 bg-red-50 text-red-700 rounded-lg">
-        {{ analysisResult.error() }}
+        {{ analysisResults.error() }}
       </div>
     }
   </div>
 
-  @if (analysisResult.value(); as result) {
-    <app-analysis-report
+  @if (analysisResults.value(); as result) {
+    <app-analysis-results
       [result]="result"
       (resetAnalysis)="reset()"
     />

@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { FollowAnalysis } from '../../models/comparison-tool.models';
 
 @Component({
-  selector: 'app-analysis-report',
+  selector: 'app-analysis-results',
   imports: [],
-  templateUrl: './analysis-report.component.html',
+  templateUrl: './analysis-results.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnalysisReportComponent {
+export class AnalysisResultsComponent {
   public result = input.required<FollowAnalysis>();
 
   public readonly resetAnalysis = output<void>();
