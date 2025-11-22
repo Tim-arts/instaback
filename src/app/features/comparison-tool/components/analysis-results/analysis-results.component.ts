@@ -12,7 +12,7 @@ export class AnalysisResultsComponent {
 
   public readonly resetAnalysis = output<void>();
 
-  readonly notFollowingBackCount = computed(() =>
+  protected readonly notFollowingBackCount = computed(() =>
     this.result().notFollowingBack.length ?? 0
   );
 }
