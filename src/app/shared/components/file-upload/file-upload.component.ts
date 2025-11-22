@@ -12,6 +12,7 @@ export class FileUploadComponent {
   public readonly inputId = input.required<string>();
   public readonly fileNameLabel = input.required<string>();
   public readonly fileType = input.required<FileTypeEnum>();
+  public readonly disabled = input.required<boolean>();
 
   public readonly changeEvent = output<Event>();
 

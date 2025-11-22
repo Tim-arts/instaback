@@ -8,6 +8,7 @@
       [inputId]="'followers-file'"
       [fileNameLabel]="followersFileName()"
       [fileType]="FileTypeEnum.FOLLOWERS"
+      [disabled]="isAnalysisTriggered()"
       (changeEvent)="onFollowersFileSelected($event)"
     />
     <app-file-upload
@@ -15,27 +16,28 @@
       [inputId]="'following-file'"
       [fileNameLabel]="followingFileName()"
       [fileType]="FileTypeEnum.FOLLOWING"
+      [disabled]="isAnalysisTriggered()"
       (changeEvent)="onFollowingFileSelected($event)"
     />
 
     <button
       class="w-full p-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors mt-4"
       [disabled]="!canAnalyze()"
-      (click)="analyzeFiles()"
+      (click)="startAnalysis()"
     >
-      {{ analyzerService.loading() ? 'Analyzing...' : 'Analyze' }}
+      {{ analysisResult.isLoading() ? 'Analyzing...' : 'Analyze' }}
     </button>
 
-    @if (analyzerService.error()) {
+    @if (analysisResult.error()) {
       <div class="mt-4 p-4 bg-red-50 text-red-700 rounded-lg">
-        {{ analyzerService.error() }}
+        {{ analysisResult.error() }}
       </div>
     }
   </div>
 
-  @if (analyzerService.analysis(); as analysis) {
+  @if (analysisResult.value(); as result) {
     <app-analysis-report
-      [analysis]="analysis"
+      [result]="result"
       (resetAnalysis)="reset()"
     />
   }

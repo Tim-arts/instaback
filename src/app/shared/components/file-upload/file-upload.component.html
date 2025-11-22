@@ -7,8 +7,14 @@
       accept=".json"
       (change)="changeEvent.emit($event)"
       class="hidden"
+      [disabled]="disabled()"
     />
-    <span class="block p-3 bg-white border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 transition-colors">
+    <span
+      class="block p-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 transition-colors"
+      [class.bg-white]="!disabled()"
+      [class.bg-grey]="disabled()"
+      [class.cursor-not-allowed]="disabled()"
+    >
       {{ fileNameLabelComputed()}}
     </span>
   </label>
