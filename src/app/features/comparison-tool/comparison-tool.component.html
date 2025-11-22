@@ -6,19 +6,21 @@
     <app-file-upload
       [inputNameLabel]="'Followers File'"
       [inputId]="'followers-file'"
-      [followersFileNameLabel]="followersFileName()"
+      [fileNameLabel]="followersFileName()"
+      [fileType]="FileTypeEnum.FOLLOWERS"
       (changeEvent)="onFollowersFileSelected($event)"
     />
     <app-file-upload
       [inputNameLabel]="'Following File'"
       [inputId]="'following-file'"
-      [followersFileNameLabel]="followersFileName()"
+      [fileNameLabel]="followingFileName()"
+      [fileType]="FileTypeEnum.FOLLOWING"
       (changeEvent)="onFollowingFileSelected($event)"
     />
 
     <button
       class="w-full p-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors mt-4"
-      [disabled]="!canAnalyze() || analyzerService.loading()"
+      [disabled]="!canAnalyze()"
       (click)="analyzeFiles()"
     >
       {{ analyzerService.loading() ? 'Analyzing...' : 'Analyze' }}

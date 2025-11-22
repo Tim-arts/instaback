@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
+import { FileTypeEnum } from '../../shared/models/file-type.models';
 import { AnalysisReportComponent } from './components/analysis-report/analysis-report.component';
 import { FileUploadComponent } from '../../shared/components/file-upload/file-upload.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -22,9 +23,14 @@ export class ComparisonToolComponent {
   #followersFile = signal<File | undefined>(undefined);
   #followingFile = signal<File | undefined>(undefined);
 
+  protected readonly canAnalyze = linkedSignal(() => {
+    if(this.analyzerService.loading()) return false;
+
+    return !!this.#followersFile() && !!this.#followingFile()
+  });
+
   protected readonly followersFileName = signal<string>('');
   protected readonly followingFileName = signal<string>('');
-  protected readonly canAnalyze = signal<boolean>(false);
 
   protected onFollowersFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -33,7 +39,6 @@ export class ComparisonToolComponent {
     if (file) {
       this.#followersFile.set(file);
       this.followersFileName.set(file.name);
-      this.#updateCanAnalyze();
     }
   }
 
@@ -44,17 +49,12 @@ export class ComparisonToolComponent {
     if (file) {
       this.#followingFile.set(file);
       this.followingFileName.set(file.name);
-      this.#updateCanAnalyze();
     }
   }
 
   protected analyzeFiles(): void {
-    const followersFile = this.#followersFile();
-    const followingFile = this.#followingFile();
-
-    if (!followersFile || !followingFile) {
-      return;
-    }
+    const followersFile = this.#followersFile()!;
+    const followingFile = this.#followingFile()!;
 
     this.analyzerService.analyzeFollowData(followersFile, followingFile).subscribe({
       error: (error) => {
@@ -65,6 +65,7 @@ export class ComparisonToolComponent {
 
   protected reset(): void {
     this.analyzerService.clearAnalysis();
+
     this.#followersFile.set(undefined);
     this.#followingFile.set(undefined);
     this.followersFileName.set('');
@@ -72,10 +73,5 @@ export class ComparisonToolComponent {
     this.canAnalyze.set(false);
   }
 
-  #updateCanAnalyze(): void {
-    this.canAnalyze.set(
-      this.#followersFile() !== undefined &&
-      this.#followingFile() !== undefined
-    );
-  }
+  protected readonly FileTypeEnum = FileTypeEnum;
 }
