@@ -1,0 +1,40 @@
+<div class="max-w-4xl mx-auto p-8">
+  <app-header />
+  <app-instructions />
+
+  <div class="bg-gray-50 p-8 rounded-xl mb-8">
+    <app-file-upload
+      [inputNameLabel]="'Followers File'"
+      [inputId]="'followers-file'"
+      [followersFileNameLabel]="followersFileName()"
+      (changeEvent)="onFollowersFileSelected($event)"
+    />
+    <app-file-upload
+      [inputNameLabel]="'Following File'"
+      [inputId]="'following-file'"
+      [followersFileNameLabel]="followersFileName()"
+      (changeEvent)="onFollowingFileSelected($event)"
+    />
+
+    <button
+      class="w-full p-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors mt-4"
+      [disabled]="!canAnalyze() || analyzerService.loading()"
+      (click)="analyzeFiles()"
+    >
+      {{ analyzerService.loading() ? 'Analyzing...' : 'Analyze' }}
+    </button>
+
+    @if (analyzerService.error()) {
+      <div class="mt-4 p-4 bg-red-50 text-red-700 rounded-lg">
+        {{ analyzerService.error() }}
+      </div>
+    }
+  </div>
+
+  @if (analyzerService.analysis(); as analysis) {
+    <app-analysis-report
+      [analysis]="analysis"
+      (resetAnalysis)="reset()"
+    />
+  }
+</div>

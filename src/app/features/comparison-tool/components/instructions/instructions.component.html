@@ -1,0 +1,37 @@
+<div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-8">
+  <h3 class="text-lg font-semibold text-blue-900 mb-2">📋 How to Get Your Instagram Data</h3>
+  <ol class="list-decimal list-inside space-y-2 text-blue-800 mb-3">
+    <li>Go to Instagram Settings → Accounts Center → Your information and permissions</li>
+    <li>Select "Download your information" → "Download or transfer information"</li>
+    <li>Choose "Some of your information" and select "Followers and following"</li>
+    <li>Select "Download to device" → Format: JSON → Click "Create files"</li>
+    <li>Instagram will email you when your data is ready (usually within 48 hours)</li>
+    <li>Once downloaded, unzip the folder. You will find the relevant files here:
+      <ul class="list-disc list-inside text-blue-700 ml-4">
+        <li>
+          <strong>followers.json</strong> → <code>connections/followers_and_following/followers.json</code>
+          <br><span class="text-sm text-red-600">
+            ⚠️ Note: Depending on your account or Instagram’s export system, this file may instead be named <code>followers_1.json</code>. If that’s the case, just upload it, it contains the same data.
+          </span>
+        </li>
+        <li>
+          <strong>following.json</strong> → <code>connections/followers_and_following/following.json</code>
+          <br><span class="text-sm text-red-600">
+            ⚠️ Similarly, if you follow many accounts, the file might be named <code>following_1.json</code>. That’s normal.
+          </span>
+        </li>
+      </ul>
+      These are the files you can upload to InstaBack for analysis.
+    </li>
+  </ol>
+  <p class="text-sm text-blue-700">
+    Need help?
+    <a
+      href="https://help.instagram.com/181231772500920"
+      target="_blank"
+      class="underline font-medium hover:text-blue-900"
+    >
+      View official Instagram guide →
+    </a>
+  </p>
+</div>

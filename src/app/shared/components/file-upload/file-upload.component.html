@@ -1,0 +1,15 @@
+<div class="mb-4">
+  <label for="followers-file" class="block cursor-pointer">
+    <span class="block font-semibold mb-2 text-gray-700">{{ inputNameLabel() }}</span>
+    <input
+      [id]="inputId()"
+      type="file"
+      accept=".json"
+      (change)="changeEvent.emit($event)"
+      class="hidden"
+    />
+    <span class="block p-3 bg-white border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-gray-400 transition-colors">
+      {{ followersFileNameLabel() || 'Choose followers.json' }}
+    </span>
+  </label>
+</div>
